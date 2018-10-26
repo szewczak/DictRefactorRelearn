@@ -111,7 +111,7 @@ int main() {
 
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
-			out[row][col] = img[row][col];
+			out[row][col] = (255 - img[row][col]);
 		}
 	}
 
