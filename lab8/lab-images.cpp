@@ -15,7 +15,6 @@ https://maryash.github.io/135/labs/lab_08.html
 
 using namespace std;
 
-//GLOBALS (eventhough he is too big to say use globals yourself)
 const int MAX_H = 512;
 const int MAX_W = 512;
 

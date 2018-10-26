@@ -103,21 +103,23 @@ int main() {
 
 	// Now we can manipulate the image the way we like
 	// for example we copy its contents into a new array
+	
+	
+	
 	int out[MAX_H][MAX_W];
-	double quarterW = w/4;
-	double quarterH = h/4;
 
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
-      if ( (row > quarterH && row < 3 * quarterH) && (col > quarterW && col < 3 * quarterW) ) {
- 			  out[row][col] = 255;
-      } else {
-        out[row][col] = img[row][col];
-      }
+			int outRow = row * 2;
+			int outCol = col * 2;
+			out[outRow][outCol] = img[row][col];
+			out[outRow][outCol+1] = img[row][col];
+			out[outRow+1][outCol] = img[row][col];
+			out[outRow+1][outCol+1] = img[row][col];
 		}
 	}
 
 	// and save this new image to file "outImage.pgm"
-	writeImage(out, h, w);
+	writeImage(out, h*2, w*2);
 
 }

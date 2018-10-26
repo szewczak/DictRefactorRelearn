@@ -109,7 +109,9 @@ int main() {
 
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
-      if ( (row > quarterH && row < 3 * quarterH) && (col > quarterW && col < 3 * quarterW) ) {
+      if ( row > quarterH && row < 3 * quarterH && (col == quarterW || col == 3 * quarterW) ) {
+ 			  out[row][col] = 255;
+      } else if ( (row == quarterH || row == 3 * quarterH) && col > quarterW && col < 3 * quarterW ) {
  			  out[row][col] = 255;
       } else {
         out[row][col] = img[row][col];

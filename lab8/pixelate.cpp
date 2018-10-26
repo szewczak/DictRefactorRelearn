@@ -103,17 +103,23 @@ int main() {
 
 	// Now we can manipulate the image the way we like
 	// for example we copy its contents into a new array
+	
+	
+	
 	int out[MAX_H][MAX_W];
-	double quarterW = w/4;
-	double quarterH = h/4;
 
-	for(int row = 0; row < h; row++) {
-		for(int col = 0; col < w; col++) {
-      if ( (row > quarterH && row < 3 * quarterH) && (col > quarterW && col < 3 * quarterW) ) {
- 			  out[row][col] = 255;
-      } else {
-        out[row][col] = img[row][col];
-      }
+	for(int row = 0; row < h; row+=2) {
+		for(int col = 0; col < w; col+=2) {
+      int tL = img[row][col];
+      int tR = img[row][col+1];
+      int bL = img[row+1][col];
+      int bR = img[row+1][col+1];
+      int average = (tL + tR + bL + bR)/4;
+      
+      out[row][col] = average;
+      out[row][col+1] = average;
+      out[row+1][col] = average;
+      out[row+1][col+1] = average;
 		}
 	}
 
