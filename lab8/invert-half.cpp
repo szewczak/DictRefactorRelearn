@@ -2,20 +2,14 @@
 Author: Nick Szewczak
 Course: CSCI-136
 Instructor: Subhadarshi Panda
-Assignment: LAB 8 Task A. Invert colors
+Assignment: LAB 8 Task B. Invert colors in the right half
+
 https://maryash.github.io/135/labs/lab_08.html
+Write a program invert-half.cpp that inverts the colors only in the right half of the picture.
+
+Example:
 
 
-Write a new program invert.cpp that inverts all colors, so white shades become black, and black become white:
-
-Since black = 0, and white = 255, you should do the following transformation for each pixel color:
-
-0 → 255 
-1 → 254 
-2 → 253
-… 
-254 → 1 
-255 → 0
 
 ...*/
 
@@ -46,7 +40,7 @@ void readImage(int image[MAX_H][MAX_W], int &height, int &width) {
 
 	// skip the comments (if any)
 	while ((instr>>ws).peek() == '#') {
-		instr.ignore(4096, '\n');
+		instr.ignore(4096, '\n')
 	}
 
 	instr >> width;
