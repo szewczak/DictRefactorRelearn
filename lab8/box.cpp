@@ -2,15 +2,11 @@
 Author: Nick Szewczak
 Course: CSCI-136
 Instructor: Subhadarshi Panda
-Assignment: LAB 8 Task B. Invert colors in the right half
+Assignment: LAB 8 Task C. Add a white box
+Write a program box.cpp that draws a white box exactly in the middle of the picture. The dimensions of the box should be 50% by 50% of the original picture’s width and height.
 
+Since the program should work for all input images that fit into the array, don’t “hard-code” the cat picture dimensions into the program, use variables w and h instead.
 https://maryash.github.io/135/labs/lab_08.html
-Write a program invert-half.cpp that inverts the colors only in the right half of the picture.
-
-Example:
-
-
-
 ...*/
 
 #include <iostream>
@@ -112,11 +108,13 @@ int main() {
 	
 	
 	int out[MAX_H][MAX_W];
+	double quarterh = h/4;
+	double quarterw = w/4;
 
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
-			if(w/2< col){
-				out[row][col] = 255 - img[row][col];
+			if((quarterw < col && quarterw*3 > col) && (quarterh < row && quarterh*3 > row)){
+				out[row][col] = 255;
 			}
 			else{
 				out[row][col] = img[row][col];

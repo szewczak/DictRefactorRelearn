@@ -2,16 +2,14 @@
 Author: Nick Szewczak
 Course: CSCI-136
 Instructor: Subhadarshi Panda
-Assignment: LAB 8 Task B. Invert colors in the right half
+Assignment: LAB 8 Task D. One-pixel-thick frame
+Program frame.cpp. Same as the previous task, but it should be a frame exactly one pixel thick.
 
 https://maryash.github.io/135/labs/lab_08.html
-Write a program invert-half.cpp that inverts the colors only in the right half of the picture.
-
-Example:
-
-
-
 ...*/
+/*example header
+P2 | 250 194 | 255 | 210 208 208 212 214 212 212 .....
+*/
 
 #include <iostream>
 #include <cassert>
@@ -59,13 +57,6 @@ void readImage(int image[MAX_H][MAX_W], int &height, int &width) {
 	return;
 }
 
-/*example header
-P2
-250 194
-255
-210 208 208 212 214 212 212 .....
-*/
-
 void writeImage(int image[MAX_H][MAX_W], int height, int width) {
 	ofstream ostr;
 	ostr.open("outImage.pgm");
@@ -93,8 +84,6 @@ void writeImage(int image[MAX_H][MAX_W], int height, int width) {
 	return;
 }
 
-
-
 // http://paulcuth.me.uk/netpbm-viewer/
 int main() {
 
@@ -112,11 +101,16 @@ int main() {
 	
 	
 	int out[MAX_H][MAX_W];
+	int quarterh = h/4;
+	int quarterw = w/4;
 
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
-			if(w/2< col){
-				out[row][col] = 255 - img[row][col];
+			if((quarterw == col || quarterw*3 == col) && (quarterh < row && quarterh*3 > row)){ // && (quarterh < row && quarterh*3 > row)){
+				out[row][col] = 255;
+			}
+			else if((quarterh == row || quarterh*3 == row) && (quarterw <= col && quarterw*3 >= col)){ // && (quarterh < row && quarterh*3 > row)){
+				out[row][col] = 255;
 			}
 			else{
 				out[row][col] = img[row][col];
