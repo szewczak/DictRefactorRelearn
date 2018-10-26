@@ -1,5 +1,5 @@
 /*
-Author: Nick Szewczak AND Jeff Horn COLLAB
+Author: Jeff Horn COLLAB
 Course: CSCI-136
 Instructor: Subhadarshi Panda
 Assignment: LAB 8
@@ -104,13 +104,15 @@ int main() {
 	// Now we can manipulate the image the way we like
 	// for example we copy its contents into a new array
 	
-	
-	
 	int out[MAX_H][MAX_W];
 
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
-			out[row][col] = (255 - img[row][col]);
+      if ( (row >= w/4 && row <= 3 * w/4) && (col >= h/4 && col <= 3 * h/4) ) {
+ 			  out[row][col] = 255;
+      } else {
+        out[row][col] = img[row][col];
+      }
 		}
 	}
 
