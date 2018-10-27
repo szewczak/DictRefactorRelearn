@@ -107,13 +107,13 @@ int main() {
 	int largeh = h*2;
 	int largew = w*2;
 
-	for(int row = 0; row < h; row++) {
-		for(int col = 0; col < w; col++) {
-			out[row][col] = img[row][col];
+	for(int row = 0; row < largeh; row++) {
+		for(int col = 0; col < largew; col++) {
+			out[row][col] = img[row/2][col/2];
 		}
 	}
 
 	// and save this new image to file "outImage.pgm"
-	writeImage(out, h, w);
+	writeImage(out, largeh, largew);
 
 }
