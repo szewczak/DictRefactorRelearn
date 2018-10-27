@@ -121,6 +121,7 @@ int main() {
 	
 	
 	int out[MAX_H][MAX_W];
+	int tmp[MAX_H][MAX_W];
 	int largeh = h*2;
 	int largew = w*2;
 
