@@ -2,10 +2,13 @@
 Author: Nick Szewczak
 Course: CSCI-136
 Instructor: Subhadarshi Panda
-Assignment: LAB 8 Task D. One-pixel-thick frame
-Program frame.cpp. Same as the previous task, but it should be a frame exactly one pixel thick.
+Assignment: LAB 8 Task E. Scale 200%
+Program scale.cpp. Scale the original picture to 200% of its size. It can be done by increasing the size of the picture by the factor of 2, and copying each pixel of the input as a small 2x2 square in the output. (We don’t do any interpolation of colors as more advanced scaling procedures would do.)
 
-https://maryash.github.io/135/labs/lab_08.html
+11 22    ->    11 11 22 22
+33 44          11 11 22 22
+               33 33 44 44
+               33 33 44 44
 ...*/
 /*example header
 P2 | 250 194 | 255 | 210 208 208 212 214 212 212 .....
@@ -101,20 +104,12 @@ int main() {
 	
 	
 	int out[MAX_H][MAX_W];
-	int quarterh = h/4;
-	int quarterw = w/4;
+	int largeh = h*2;
+	int largew = w*2;
 
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
-			if((quarterw == col || quarterw*3 == col) && (quarterh < row && quarterh*3 > row)){ // && (quarterh < row && quarterh*3 > row)){
-				out[row][col] = 255;
-			}
-			else if((quarterh == row || quarterh*3 == row) && (quarterw <= col && quarterw*3 >= col)){ // && (quarterh < row && quarterh*3 > row)){
-				out[row][col] = 255;
-			}
-			else{
-				out[row][col] = img[row][col];
-			}
+			out[row][col] = img[row][col];
 		}
 	}
 
