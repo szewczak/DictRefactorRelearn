@@ -2,30 +2,52 @@
 Author: Nick Szewczak
 Course: CSCI-136
 Instructor: Subhadarshi Panda
-Assignment: LAB 8 Task F. Pixelate
-Program pixelate.cpp will be pixelating the input image.
+Assignment: LAB 8 Task G (Bonus). Kernel method image filtering
+A sliding window operator replaces each pixel with some function of its 8
+neighbors (and itself). Consider pixel e and its 8 neighbors (labeled a-i)
+that form a 3x3 window around it:
 
-One way to pixelate an image is to effectively make every 2x2
-non-overlapping window contain the same value (averaged over
-all the pixels in that window of the input). For example,
-the following image:
+. . . . . .
+. . . . . .
+. a b c . . 
+. d e f . .
+. g h i . .
+. . . . . .
+The operation replaces pixel e (in the middle of the 3x3 window) with some
+function of its neighbors f(a,b,c,d,e,f,g,h,i). It is possible to implement
+blur, edge detection, and many other image processing operations using this
+technique.
 
-10 20 30 40
-11 21 31 41
-12 22 32 42
-13 23 33 43
-should be transformed to:
+References:
 
-16 16 36 36
-16 16 36 36
-18 18 37 37
-18 18 37 37
-where the 16 was computed by averaging 10, 20, 11, and 21 (after
-rounding), and so on.
-For simplicity, assume that the width and the height of the image
-are even numbers, so the picture is divisible into small 2x2
-squares, like in the example above.
+Lode’s Computer Graphics Tutorial - Image Filtering
+Interactive demo for different functions (kernels)
+For this task, write a program kernel.cpp, which implements a horizontal edge
+detection operation. One way to detect horizontal edges is to use the function
 
+f(a,b,c,d,e,f,g,h,i) = (g+2h+i)-(a+2b+c)
+(This is one component of the so called Sobel operator, if you want to read
+more about it.)
+
+Example:
+
+ 
+Remark 1: Note that this is a sliding window operator unlike the non-overlapping
+window pixelization operator in the previous task. That is, the considered window
+is always a window around the pixel whose value is being computed.
+
+Remark 2: You shouldn’t overwrite the original array. Make a new array for the
+output, and write the resulting pixel color into the new array.
+
+Remark 3: There are several ways to handle the pixels on the borders, which don’t
+have all 8 neighbors available. Come up with any reasonable way to assign their
+colors (you can assume that the non-existing neighbors are black, or make the
+boundary wrap around, or even simply assign black color to the boundary pixels
+in the output).
+
+Remark 4: If the resulting color is less than 0 or greater than 255, make them
+0 and 255 respectively, otherwise writeImage function will complain that the
+colors are out of range.
 ...*/
 /*example header
 P2 | 250 194 | 255 | 210 208 208 212 214 212 212 .....
@@ -118,20 +140,23 @@ int main() {
 	// Now we can manipulate the image the way we like
 	// for example we copy its contents into a new array
 	
-	
+	double filter[3][3] =
+	{
+		0, 0, 0,
+		0, 1, 0,
+		0, 0, 0
+	};
 	
 	int out[MAX_H][MAX_W];
-	int smallh = h/2;
-	int smallw = w/2;
 	int temp;
-	for(int row = 0; row < smallh; row++) {
-		for(int col = 0; col < smallw; col++) {
-			temp = img[row*2][col*2] + img[row*2+1][col*2] + img[row*2][col*2+1] + img[row*2+1][col*2+1];
-			temp /= 4;
-			out[row*2   ][col*2   ] = temp;
-			out[row*2   ][col*2 +1] = temp;
-			out[row*2 +1][col*2   ] = temp;
-			out[row*2 +1][col*2 +1] = temp;
+	for(int row = 0; row < h; row++) {
+		for(int col = 0; col < w; col++) {
+			if(col==0 || col==w-1 || row==0 || row==h-1){
+				out[row][col]=255;
+			}
+			else{			
+				out[row][col] = img[row][col];
+			}
 			
 		}
 	}
