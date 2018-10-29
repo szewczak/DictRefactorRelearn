@@ -126,38 +126,52 @@ void writeImage(int image[MAX_H][MAX_W], int height, int width) {
 	return;
 }
 
-int kernaledge(int img[MAX_H][MAX_W], int h, int w, int atcol, int atrow){
+int kernaledge(int img[MAX_H][MAX_W], int h, int w, int atrow, int atcol){
 	// Check if this is a literal edge case
 	if(atcol==0 || atcol==h-1 || w==0 || atrow==w-1){
 		return 0;
 	}
 	else{
-		// Do Sobal edge detection [width, hard wired]
-		h =- 1;
-		w =- 1;
-		double const static filterArray[3][3] =
-		{
-			0, -1, 0,
-			0,  2, 0,
-			0, -1, 0
+		int temp;
+		double filterArray[3][3] =
+		{ 0, -1, 0,
+		  0,  2, 0,
+		  0,  0, 0
 		};
-		int temp =0;
-		for(int row; row < h; row++){
-			for(int col; col < w; col++){
-				temp =+ img[atcol+col][atrow+row];
-				cout << temp << "\t";
+		for(int row = -1; row < 2; row++){
+			for(int col (-1); col < 2; col++){
+				temp =+ img[atcol+col][atrow+row] * filterArray[col+1][row+1];
 			}
-			cout << endl;
 		}
-		temp =temp/9;
-		if(temp <= 0){
-			temp = 0;
-		}
-		if(temp >= 255){
-			temp = 255;
-		}
+		if(temp < 000)temp = 0;
+		if(temp > 255)temp = 255;
 		return temp;
 	}
+	// 	// Do Sobal edge detection [width, hard wired]
+	// 	h =- 1;
+	// 	w =- 1;
+	// 	int temp =0;
+	// 	double const static filterArray[3][3] =
+	// 	{
+	// 		0, -1, 0,
+	// 		0,  2, 0,
+	// 		0, -1, 0
+	// 	};
+	// 	for(int row; row < h; row++){
+	// 		for(int col; col < w; col++){
+	// 			temp =+ img[atcol+col][atrow+row];
+	// 			cout << temp << "\t";
+	// 		}
+	// 		cout << endl;
+	// 	}
+	// 	temp =temp/9;
+	// 	if(temp <= 0){
+	// 		temp = 0;
+	// 	}
+	// 	if(temp >= 255){
+	// 		temp = 255;
+	// 	}
+	// 	return temp;
 
 }
 
@@ -184,9 +198,7 @@ int main() {
 				out[row][col]=0;
 			}
 			else{
-				if(kernaledge(img, h, w, col, row)!=0){
-					exit;
-				}
+				out[row][col] = kernaledge(img, h, w, col, row);
 			}
 		}
 	}
