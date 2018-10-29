@@ -143,7 +143,7 @@ int kernaledge(int img[MAX_H][MAX_W], int h, int w, int atrow, int atcol){
 				temp =+ img[atcol+col][atrow+row] * filterArray[col+1][row+1];
 			}
 		}
-		if(temp < 000)temp = 0;
+		if(temp <   0)temp = 0;
 		if(temp > 255)temp = 255;
 		return temp;
 	}
