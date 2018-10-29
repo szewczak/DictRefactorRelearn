@@ -126,38 +126,68 @@ void writeImage(int image[MAX_H][MAX_W], int height, int width) {
 	return;
 }
 
+int kernaledge(int img[MAX_H][MAX_W], int h, int w, int atcol, int atrow){
+	// Check if this is a literal edge case
+	if(atcol==0 || atcol==h-1 || w==0 || atrow==w-1){
+		return 0;
+	}
+	else{
+		// Do Sobal edge detection [width, hard wired]
+		h =- 1;
+		w =- 1;
+		double const static filterArray[3][3] =
+		{
+			0, -1, 0,
+			0,  2, 0,
+			0, -1, 0
+		};
+		int temp =0;
+		for(int row; row < h; row++){
+			for(int col; col < w; col++){
+				temp =+ img[atcol+col][atrow+row];
+				cout << temp << "\t";
+			}
+			cout << endl;
+		}
+		temp =temp/9;
+		if(temp <= 0){
+			temp = 0;
+		}
+		if(temp >= 255){
+			temp = 255;
+		}
+		return temp;
+	}
+
+}
+
 // http://paulcuth.me.uk/netpbm-viewer/
 int main() {
 
 	int img[MAX_H][MAX_W];
 	int h, w;
 
-	readImage(img, h, w); // read it from the file "inImage.pgm"
-	// h and w were passed by reference and
-	// now contain the dimensions of the picture
-	// and the 2-dimesional array img contains the image data
-
-	// Now we can manipulate the image the way we like
-	// for example we copy its contents into a new array
-	
-	double filter[3][3] =
-	{
-		0, 0, 0,
-		0, 1, 0,
-		0, 0, 0
-	};
+	readImage(img, h, w);
+	/* read it from the file "inImage.pgm"
+	h and w were passed by reference and
+	now contain the dimensions of the picture
+	and the 2-dimesional array img contains the image data
+	Now we can manipulate the image the way we like
+	for example we copy its contents into a new array
+	*/
 	
 	int out[MAX_H][MAX_W];
 	int temp;
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
 			if(col==0 || col==w-1 || row==0 || row==h-1){
-				out[row][col]=255;
+				out[row][col]=0;
 			}
-			else{			
-				out[row][col] = img[row][col];
+			else{
+				if(kernaledge(img, h, w, col, row)!=0){
+					exit;
+				}
 			}
-			
 		}
 	}
 
