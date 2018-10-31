@@ -139,9 +139,9 @@ int kernaledge(int img[MAX_H][MAX_W], int h, int w, int atrow, int atcol){
 		// . d e f . .
 		// . g h i . .
 		// . . . . . .		f = (g+2*h+i)-(a+2*b+c)
-		int a = img[atcol-1][atrow-1];	int b = img[atcol][atrow-1];	int c = img[atcol+1][atrow-1]; 
-		int d = img[atcol-1][atrow]  ;	int e = img[atcol][atrow]  ;	int f = img[atcol+1][atrow]  ; 
-		int g = img[atcol-1][atrow+1];	int h = img[atcol][atrow+1];	int i = img[atcol+1][atrow+1];
+		int c = img[atcol-1][atrow-1];	int f = img[atcol][atrow-1];	int i = img[atcol+1][atrow-1]; 
+		int b = img[atcol-1][atrow]  ;	int e = img[atcol][atrow]  ;	int h = img[atcol+1][atrow]  ; 
+		int a = img[atcol-1][atrow+1];	int d = img[atcol][atrow+1];	int g = img[atcol+1][atrow+1];
 		f = (g+2*h+i)-(a+2*b+c);
 		if(f <   0){
 			f = 0;
