@@ -128,27 +128,30 @@ void writeImage(int image[MAX_H][MAX_W], int height, int width) {
 
 int kernaledge(int img[MAX_H][MAX_W], int h, int w, int atrow, int atcol){
 	// Check if this is a literal edge case
+	int f;
 	if(atcol==0 || atcol==h-1 || w==0 || atrow==w-1){
 		return 0;
 	}
 	else{
-		int temp;
-		double filterArray[3][3] =
-		{ 0, -1, 0,
-		  0,  2, 0,
-		  0,  0, 0
-		};
-		for(int row = -1; row < 2; row++){
-			for(int col (-1); col < 2; col++){
-				temp =+ img[atcol+col][atrow+row] * filterArray[col+1][row+1];
-			}
+		// . . . . . .
+		// . . . . . .
+		// . a b c . . 
+		// . d e f . .
+		// . g h i . .
+		// . . . . . .		f = (g+2*h+i)-(a+2*b+c)
+		int a = img[atcol-1][atrow-1];	int b = img[atcol][atrow-1];	int c = img[atcol+1][atrow-1]; 
+		int d = img[atcol-1][atrow]  ;	int e = img[atcol][atrow]  ;	int f = img[atcol+1][atrow]  ; 
+		int g = img[atcol-1][atrow+1];	int h = img[atcol][atrow+1];	int i = img[atcol+1][atrow+1];
+		f = (g+2*h+i)-(a+2*b+c);
+		if(f <   0){
+			f = 0;
 		}
-		if(temp <   0)temp = 0;
-		if(temp > 255)temp = 255;
-		return temp;
+		if(f > 255){
+			f = 255;
+		}
+		return f;
+		}
 	}
-
-}
 
 // http://paulcuth.me.uk/netpbm-viewer/
 int main() {
@@ -169,12 +172,7 @@ int main() {
 	int temp;
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
-			if(col==0 || col==w-1 || row==0 || row==h-1){
-				out[row][col]=0;
-			}
-			else{
-				out[row][col] = kernaledge(img, h, w, col, row);
-			}
+			out[row][col] = kernaledge(img, h, w, col, row);
 		}
 	}
 
