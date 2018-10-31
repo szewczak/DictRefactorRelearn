@@ -147,31 +147,6 @@ int kernaledge(int img[MAX_H][MAX_W], int h, int w, int atrow, int atcol){
 		if(temp > 255)temp = 255;
 		return temp;
 	}
-	// 	// Do Sobal edge detection [width, hard wired]
-	// 	h =- 1;
-	// 	w =- 1;
-	// 	int temp =0;
-	// 	double const static filterArray[3][3] =
-	// 	{
-	// 		0, -1, 0,
-	// 		0,  2, 0,
-	// 		0, -1, 0
-	// 	};
-	// 	for(int row; row < h; row++){
-	// 		for(int col; col < w; col++){
-	// 			temp =+ img[atcol+col][atrow+row];
-	// 			cout << temp << "\t";
-	// 		}
-	// 		cout << endl;
-	// 	}
-	// 	temp =temp/9;
-	// 	if(temp <= 0){
-	// 		temp = 0;
-	// 	}
-	// 	if(temp >= 255){
-	// 		temp = 255;
-	// 	}
-	// 	return temp;
 
 }
 
